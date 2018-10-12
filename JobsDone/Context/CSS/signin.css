@@ -1,0 +1,11 @@
+﻿#signin {
+    width: 540px;
+    margin:40px auto;
+    text-align:center;
+}
+
+@media only screen and (max-width : 768px) {
+    #signin {
+        width: 100%;
+    }
+}

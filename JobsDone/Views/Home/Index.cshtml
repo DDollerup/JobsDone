@@ -1,0 +1,67 @@
+﻿@model List<Case>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h3>
+            Cases
+        </h3>
+        <p>
+            All Cases
+        </p>
+    </div>
+</div>
+
+<a href="#" class="btn btn-primary" id="addCaseModal">Add Case</a>
+<hr />
+
+<table class="table table-striped">
+    <tr>
+        <th>Title</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th><span class="float-right">Actions</span></th>
+    </tr>
+    @foreach (Case item in Model)
+    {
+        <tr>
+            <td data-title>@item.Title</td>
+            <td data-startdate>@item.StartDate.ToShortDateString()</td>
+            <td data-enddate>@item.EndDate.ToShortDateString()</td>
+            <td width="20%">
+                <a href="/Home/ShowCase/@item.ID" class="btn btn-info float-right">See More</a>
+                <a href="#" data-id="@item.ID" class="btn btn-info float-right">Edit</a>
+            </td>
+        </tr>
+    }
+</table>
+
+@section JS{
+    <script>
+        $("#addCaseModal").click(function () {
+            $.getJSON('@Url.Action("AddCaseModal","Home")', function (data) {
+                $("#modalTarget").html(data.html);
+                $(".modal").modal("show");
+            });
+        });
+
+        $("[data-id]").click(function () {
+            var row = $(this).closest("tr");
+            var title = row.find("[data-title]").text();
+            var startdate = row.find("[data-startdate]").text();
+            var enddate = row.find("[data-enddate]").text();
+
+            var form = "<tr>";
+            form += "<form>";
+            form += "<td><input type='text' name='Title' placeholder='Title...' value='"+title+"' class='form-control' required autofocus /></td>";
+            form += "<td><input type='date' name='StartDate' placeholder='Start Date...' value='" + moment(startdate).format("YYYY-DD-MM")+"' class='form-control' required /></td>";
+            form += "<td><input type='date' name='EndDate' placeholder='End Date...' value='" + moment(enddate).format("YYYY-DD-MM")+"' class='form-control' /></td>";
+            form += "<td><button class='btn btn-success float-right' type='submit'>Save</button></td>";
+            form += "</form>";
+            form += "</tr>"
+            row.replaceWith(form);
+        })
+    </script>
+}

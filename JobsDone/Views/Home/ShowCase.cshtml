@@ -1,0 +1,39 @@
+﻿@model CaseVM
+@{
+    ViewBag.Title = "Case - " + Model.Case.Title;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h3>
+            @Model.Case.Title
+        </h3>
+        <p>
+            Start Date: @Model.Case.StartDate.ToShortDateString()
+            <br />
+            End Date: @Model.Case.EndDate.ToShortDateString()
+        </p>
+    </div>
+</div>
+
+<hr />
+
+<table class="table table-striped">
+    <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th><span class="float-right">Actions</span></th>
+    </tr>
+    @foreach (TaskVM item in Model.Tasks)
+    {
+        <tr>
+            <td>@item.Task.Title</td>
+            <td width="40%" height="200px"><span>@item.Relation.Description</span></td>
+            <td><span>@item.Relation.Price.ToString("#.##")</span> kr</td>
+            <td width="10%">
+                <a href="/Home/EditTask/" class="btn btn-info float-right">Edit</a>
+            </td>
+        </tr>
+    }
+</table>
