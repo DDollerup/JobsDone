@@ -5,35 +5,117 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h3>
-            @Model.Case.Title
-        </h3>
-        <p>
-            Start Date: @Model.Case.StartDate.ToShortDateString()
-            <br />
-            End Date: @Model.Case.EndDate.ToShortDateString()
-        </p>
+        <h2 class="d-block" style="font-size: 1.5rem; font-weight: bold">@Model.Case.Title</h2>
+        <h6 class="d-block">Start Date <strong>@Model.Case.StartDate.ToShortDateString()</strong></h6>
+        <h6 class="d-block">End Date <strong>@(Model.Case.EndDate != DateTime.MinValue ? Model.Case.EndDate.ToShortDateString() : "Not Finished")</strong></h6>
+        <h6 class="d-block">Email <strong>@Model.Case.Email</strong></h6>
+        <h6 class="d-block">Phone <strong>@Model.Case.Phone</strong></h6>
+        <h6 class="d-block">Remarks <strong>@Model.Case.Remarks</strong></h6>
     </div>
 </div>
 
+<a href="#" class="btn btn-primary" id="addTaskModal">Add Task</a>
+<a href="@Url.Action("Index","Home")" class="btn btn-primary float-right">Go Back</a>
 <hr />
 
-<table class="table table-striped">
-    <tr>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Price</th>
-        <th><span class="float-right">Actions</span></th>
-    </tr>
-    @foreach (TaskVM item in Model.Tasks)
-    {
+<div class="row">
+    <table class="table table-striped">
         <tr>
-            <td>@item.Task.Title</td>
-            <td width="40%" height="200px"><span>@item.Relation.Description</span></td>
-            <td><span>@item.Relation.Price.ToString("#.##")</span> kr</td>
-            <td width="10%">
-                <a href="/Home/EditTask/" class="btn btn-info float-right">Edit</a>
-            </td>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th><span class="float-right">Actions</span></th>
         </tr>
-    }
-</table>
+        @foreach (TaskVM item in Model.Tasks)
+        {
+            <tr>
+                <td data-taskid="@item.Task.ID">@item.Task.Title</td>
+                <td width="40%" height="100px" data-description>@item.Relation.Description</td>
+                <td><span data-price>@item.Relation.Price</span> kr</td>
+                <td width="10%">
+                    <a href="#" data-relation="@item.Relation.ID" class="btn btn-info float-right editTask">Edit</a>
+                    <a href="#" data-relation="@item.Relation.ID" class="btn btn-warning float-right deleteTask">delete</a>
+                </td>
+            </tr>
+        }
+        <tr @(Model.Tasks?.Count > 0 ? "" : "hidden")>
+            <td></td>
+            <td></td>
+            <td><strong>Total Price</strong></td>
+            <td><strong>@Model.TotalPrice DKK</strong></td>
+        </tr>
+    </table>
+</div>
+
+@section JS {
+    <script>
+        $("#addTaskModal").click(function () {
+            $.getJSON('@Url.Action("AddTaskModal","Home")/@Model.Case.ID', function (data) {
+                $("#modalTarget").html(data.html);
+                $(".modal").modal("show");
+            });
+        });
+
+        $(".editTask").click(function (e) {
+            var element = $(this);
+            var nearest = element.closest("tr");
+
+            var relationId = element.data("relation");
+            var taskId = nearest.find("[data-taskid]").data("taskid");
+            var description = nearest.find("[data-description]").text();
+            var price = nearest.find("[data-price]").text().replace(",",".");
+
+
+
+
+            var form = "";
+            form += "<tr id='taskRow" + relationId + "'>";
+            form += "<td height='100px'><select class='form-control' name='taskID' id='tasks" + relationId + "'></select></td>";
+            form += "<td><input type='text' class='form-control' name='relDescription' value='" + description + "' /></td>";
+            form += "<td><input type='number' class='form-control' step='.01' name='relPrice' value='" + price + "' /></td>";
+            form += "<td>";
+            form += "<input type='hidden' name='relationID' value='" + relationId + "' />";
+            form += "<button id='saveTask" + relationId + "' class='btn btn-success float-right' type='submit'>Save</button>";
+            form +=" </td> ";
+            form += "</tr>";
+
+            nearest.replaceWith(form);
+
+            $.getJSON('/Home/GetTasks', function (dropdown) {
+                var ddl = $('#tasks' + relationId);
+                ddl.empty();
+                $(document.createElement('option'))
+                    .text("Pick Task")
+                    .appendTo(ddl);
+                $(dropdown).each(function () {
+                    $(document.createElement('option'))
+                        .attr('value', this.ID)
+                        .text(this.Title)
+                        .appendTo(ddl);
+                });
+                ddl.val(taskId);
+                console.log(taskId);
+            });
+
+            $("#saveTask" + relationId).click(function () {
+                $.ajax({
+                    url: '@Url.Action("EditTask","Home")',
+                    data: $("#taskRow" + relationId + " :input").serialize(),
+                    method: 'POST',
+                    success: function (data) {
+                        window.location = data.result;
+                    }
+                });
+            });
+        });
+
+        $(".deleteTask").click(function (e) {
+            var element = $(this);
+            bootbox.confirm("Are you sure you wish to delete this?", function (result) {
+                if (result) {
+                    window.location = '/Home/DeleteTask/' + element.data("relation");
+                }
+            });
+        });
+    </script>
+}

@@ -35,5 +35,16 @@ namespace JobsDone.Helpers
             }
             return taskVMs;
         }
+
+        public static List<CaseVM> GetCaseVMsByUserID(int userID)
+        {
+            List<CaseVM> cases = new List<CaseVM>();
+            foreach (Case item in context.CaseFactory.GetAllBy("UserID", userID))
+            {
+                CaseVM vm = CreateCaseVM(item.ID);
+                cases.Add(vm);
+            }
+            return cases;
+        }
     }
 }

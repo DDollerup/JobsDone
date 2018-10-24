@@ -88,6 +88,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Context\Audio\jobs-done_1.mp3" />
+    <Content Include="Context\Bootbox\bootbox.min.js" />
     <Content Include="Context\Bootstrap\css\bootstrap-grid.css" />
     <Content Include="Context\Bootstrap\css\bootstrap-grid.min.css" />
     <Content Include="Context\Bootstrap\css\bootstrap-reboot.css" />
@@ -100,6 +102,7 @@
     <Content Include="Context\Bootstrap\js\bootstrap.min.js" />
     <Content Include="Context\CSS\main.css" />
     <Content Include="Context\CSS\signin.css" />
+    <Content Include="Context\Images\Companies\companylogo.png" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -121,6 +124,7 @@
     <Compile Include="Models\Task.cs" />
     <Compile Include="Models\TaskVM.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -143,6 +147,8 @@
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Home\ShowCase.cshtml" />
     <Content Include="Views\Home\Partials\AddCasePartial.cshtml" />
+    <Content Include="Views\Home\Partials\AddTaskPartial.cshtml" />
+    <Content Include="Views\Home\Profile.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

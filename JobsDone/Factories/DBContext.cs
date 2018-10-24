@@ -26,7 +26,7 @@ namespace JobsDone.Factories
         {
             get
             {
-                return CompanyFactory != null ? CompanyFactory : new AutoFactory<Company>();
+                return companyFactory != null ? companyFactory : new AutoFactory<Company>();
             }
         }
 

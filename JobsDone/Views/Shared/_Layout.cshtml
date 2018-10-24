@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     <link href="~/Context/Bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link href="~/Context/CSS/main.css" rel="stylesheet" />
     @RenderSection("Head", false)
 </head>
@@ -28,12 +29,14 @@
                     </ul>
                     <div class="btn-group">
                         <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            @user.Email
+                            Hello, @user.Firstname!
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <button class="dropdown-item" type="button">Profile</button>
+                            <a href="/Home/Profile" class="dropdown-item">Profile</a>
+                            @*<button class="dropdown-item" type="button">Profile</button>*@
                             <div class="dropdown-divider"></div>
-                            <button class="dropdown-item" type="button">Sign out</button>
+                            <a href="/Home/SignOut" class="dropdown-item">Sign Out</a>
+                            @*<button class="dropdown-item" type="button">Sign out</button>*@
                         </div>
                     </div>
                 }
@@ -47,10 +50,9 @@
 
     <div id="modalTarget"></div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    @*<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>*@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="~/Context/Bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.js"></script>
+    <script src="~/Context/Bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Context/Bootbox/bootbox.min.js"></script>
     @RenderSection("JS", false)
 </body>
 </html>

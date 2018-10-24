@@ -1,0 +1,80 @@
+﻿@model List<Task>
+@{
+    Layout = null;
+}
+
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Case</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="addTask">
+                <div class="modal-body">
+
+                    <form action="@Url.Action("AddTask","Home")" method="post" enctype="multipart/form-data" id="addForm">
+                        <input type="hidden" name="caseID" value="@ViewBag.CaseID" />
+                        <a href="#" class="text-info" id="btnTaskOption">Task not on the list? Add a new one!</a>
+                        <select name="taskID" id="select" required class="form-control" autofocus>
+                            <option value="">Pick Task</option>
+                            @foreach (Task item in Model)
+                            {
+                                <option value="@item.ID">@item.Title</option>
+                            }
+                        </select>
+                        <input type="text" name="taskDescription" placeholder="Description..." class="form-control" />
+                        <input type="number" step=".01" name="taskPrice" placeholder="Price..." class="form-control" />
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="saveChanges">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <div id="addTaskOption">
+                <div class="modal-body">
+                    <input type="text" class="form-control" name="taskOption" placeholder="Task Option..." required autofocus />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="saveTaskOption">Save changes</button>
+                    <button type="button" class="btn btn-secondary" id="cancelTaskOption">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#saveChanges").click(function () {
+        $("#addForm").submit();
+    });
+    $("#addTaskOption").hide();
+    $("#btnTaskOption").click(function () {
+        $("#addTask").hide("fast", function () {
+            $("#addTaskOption").show("fast", function () {
+                $("#saveTaskOption").click(function () {
+                    var element = $("#select");
+                    var value = $("[name='taskOption']").val();
+
+                    $("#addTaskOption").hide("fast", function () {
+                        $("#addTask").show("fast", function () {
+                            element.append($("<option></option>")
+                                .attr("value", 0)
+                                .text(value));
+                            element.val("0");
+                            $("#addForm").append("<input type='hidden' name='newTaskOption' value='" + value + "' />");
+                        });
+                    });
+                });
+                $("#cancelTaskOption").click(function () {
+                    $("#addTaskOption").hide("fast", function () {
+                        $("#addTask").show("fast");
+                    });
+                });
+            });
+        });
+    });
+</script>

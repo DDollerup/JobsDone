@@ -13,9 +13,18 @@
             </div>
             <div class="modal-body">
                 <form action="@Url.Action("AddCase","Home")" method="post" enctype="multipart/form-data" id="addCaseForm">
+                    <label for="Title" class="col-form-label">Title</label>
                     <input type="text" name="Title" placeholder="Title..." class="form-control" required />
+                    <label for="StartDate" class="col-form-label">Start Date</label>
                     <input type="date" name="StartDate" placeholder="Start Date..." class="form-control" required />
+                    <label for="EndDate" class="col-form-label">End Date</label>
                     <input type="date" name="EndDate" placeholder="End Date..." class="form-control" />
+                    <label for="Email" class="col-form-label">Email</label>
+                    <input type="email" name="Email" placeholder="Email..." class="form-control" />
+                    <label for="Phone" class="col-form-label">Phone</label>
+                    <input type="text" name="Phone" placeholder="Phone..." class="form-control" />
+                    <label for="Remarks" class="col-form-label">Remarks</label>
+                    <input type="text" name="Remarks" placeholder="Remarks..." class="form-control" />
                 </form>
             </div>
             <div class="modal-footer">
@@ -28,6 +37,10 @@
 
 <script>
     $("#saveChanges").click(function () {
-        $("#addCaseForm").submit();
+        var valid = $("#addCaseForm")[0].checkValidity();
+        console.log(valid);
+        if ($("#addCaseForm")[0].checkValidity()) {
+            $("#addCaseForm").submit();
+        }
     });
 </script>

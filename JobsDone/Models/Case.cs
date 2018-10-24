@@ -11,6 +11,9 @@ namespace JobsDone.Models
         public string Title { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        public string Remarks { get; set; }
         public int UserID { get; set; }
     }
 }

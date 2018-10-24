@@ -1,1 +1,8 @@
-﻿
+﻿.table td {
+    vertical-align: middle;
+    width: 25%;
+}
+
+#caseSearch {
+    width: 15em;
+}

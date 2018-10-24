@@ -9,5 +9,15 @@ namespace JobsDone.Models
     {
         public Case Case { get; set; }
         public List<TaskVM> Tasks { get; set; }
+
+        public decimal TotalPrice
+        {
+            get
+            {
+                decimal totalPrice = 0;
+                foreach (var task in Tasks) totalPrice += task.Relation.Price;
+                return totalPrice;
+            }
+        }
     }
 }

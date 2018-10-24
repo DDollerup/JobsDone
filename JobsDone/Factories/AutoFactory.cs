@@ -6,7 +6,7 @@
  - You are free to use this as you please   -
  - as long as you credit me :)              -
  -                                          -
- - Latest Update: 19-07-2018                -
+ - Latest Update: 22-10-2018                -
  --------------------------------------------
  */
 
@@ -189,7 +189,9 @@ public class AutoFactory<T>
         {
             // Passing in values for the properties
             if (properties[i].Name.ToLower().Contains("id") && i == 0) continue;
-            cmd.Parameters.AddWithValue("@" + properties[i].Name, properties[i].GetValue(entity) ?? DBNull.Value);
+            object prop = properties[i].GetValue(entity);
+            if (prop?.GetType() == typeof(DateTime) && ((DateTime)prop) == DateTime.MinValue) prop = DBNull.Value;
+            cmd.Parameters.AddWithValue("@" + properties[i].Name, prop ?? DBNull.Value);
         }
 
         // Executing the SQL statement
@@ -238,7 +240,9 @@ public class AutoFactory<T>
         {
             // Passing in values for the properties
             if (properties[i].Name.ToLower().Contains("id") && i == 0) continue;
-            cmd.Parameters.AddWithValue("@" + properties[i].Name, properties[i].GetValue(entity) ?? DBNull.Value);
+            object prop = properties[i].GetValue(entity);
+            if (prop?.GetType() == typeof(DateTime) && ((DateTime)prop) == DateTime.MinValue) prop = DBNull.Value;
+            cmd.Parameters.AddWithValue("@" + properties[i].Name, prop ?? DBNull.Value);
         }
 
         // Executing the SQL statement
