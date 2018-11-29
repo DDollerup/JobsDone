@@ -13,6 +13,7 @@ namespace JobsDone.Factories
         private AutoFactory<Relation> relationFactory;
         private AutoFactory<Task> taskFactory;
         private UserFactory userFactory;
+        private AutoFactory<Role> roleFactory;
 
         public AutoFactory<Case> CaseFactory
         {
@@ -51,6 +52,14 @@ namespace JobsDone.Factories
             get
             {
                 return userFactory != null ? userFactory : new UserFactory();
+            }
+        }
+
+        public AutoFactory<Role> RoleFactory
+        {
+            get
+            {
+                return roleFactory != null ? roleFactory : new AutoFactory<Role>();
             }
         }
     }

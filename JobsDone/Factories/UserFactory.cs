@@ -19,5 +19,12 @@ namespace JobsDone.Factories
             }
             return user;
         }
+
+        public User CompanyLogin(string email, string password)
+        {
+            User user = Login(email, password);
+            Roles role = (Roles)user.RoleID;
+            return ((role == Roles.Company || role == Roles.Admin) ? user : null);
+        }
     }
 }

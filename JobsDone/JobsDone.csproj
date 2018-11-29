@@ -108,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Factories\AutoFactory.cs" />
@@ -116,11 +117,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Enums.cs" />
     <Compile Include="Helpers\VMFactory.cs" />
     <Compile Include="Models\Case.cs" />
     <Compile Include="Models\CaseVM.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\Relation.cs" />
+    <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Task.cs" />
     <Compile Include="Models\TaskVM.cs" />
     <Compile Include="Models\User.cs" />
@@ -158,6 +161,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Company\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

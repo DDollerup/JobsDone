@@ -1,11 +1,11 @@
-﻿#signin {
+﻿#signin, #signinCompany {
     width: 540px;
     margin:40px auto;
     text-align:center;
 }
 
 @media only screen and (max-width : 768px) {
-    #signin {
+    #signin, #signinCompany {
         width: 100%;
     }
 }

@@ -16,8 +16,9 @@ namespace JobsDone.Helpers
             CaseVM vm = new CaseVM()
             {
                 Case = context.CaseFactory.Get(caseID),
-                Tasks = CreateTaskVMs(caseID)
+                Tasks = CreateTaskVMs(caseID),
             };
+            vm.User = context.UserFactory.Get(vm.Case.UserID);
             return vm;
         }
 

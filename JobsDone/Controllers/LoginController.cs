@@ -31,5 +31,20 @@ namespace JobsDone.Controllers
                 return View(user);
             }
         }
+
+        [HttpPost]
+        public ActionResult CompanyLogin(User user)
+        {
+            var userToLogin = context.UserFactory.CompanyLogin(user.Email, user.Password);
+            if (userToLogin.ID > 0)
+            {
+                return Redirect("/Company/Index");
+            }
+            else
+            {
+                ViewBag.LoginError = "Wrong username or password.";
+                return View(user);
+            }
+        }
     }
 }

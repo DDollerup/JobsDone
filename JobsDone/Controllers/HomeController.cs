@@ -50,12 +50,12 @@ namespace JobsDone.Controllers
             }
         }
 
+        #region Cases
         public ActionResult ShowCase(int id = 0)
         {
             return View(VMFactory.CreateCaseVM(id));
         }
 
-        #region Cases
         public ActionResult AddCaseModal()
         {
             var result = new { html = RenderPartialToString(this, "Partials/AddCasePartial", null) };

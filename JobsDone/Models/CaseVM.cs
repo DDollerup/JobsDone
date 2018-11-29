@@ -8,6 +8,7 @@ namespace JobsDone.Models
     public class CaseVM
     {
         public Case Case { get; set; }
+        public User User { get; set; }
         public List<TaskVM> Tasks { get; set; }
 
         public decimal TotalPrice
